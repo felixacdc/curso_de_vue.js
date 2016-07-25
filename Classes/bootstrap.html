@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Styde.net | Curso de VueJS</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <script src="js/vue.js"></script>
+</head>
+<body>
+    <h1 id="title">Bienvenido, {{ name }}!</h1>
+    
+    <!-- v-model es una propiedad de vue.js -->
+    <input type="text" v-model="name" class="form-control">
+    
+    <hr>
+    
+    <!-- Permite mostrar objetos en jormato json -->
+    <pre>{{ $data | json }}</pre>
+
+    <script>
+        /*
+        Manera de crear una bienvenida interactiva utilizando JQuery
+            $(document).ready(function() {
+
+                $("#name").keyup(function() {
+                    $("#title").text("Bienvenido " + $("#name").val());
+                });
+
+            });
+        */
+
+        // Utilizando Vue.js
+        new Vue({
+            // Define a que objeto o elemento de la pagina queremos asociar nuestro elemento de vue.js
+            el: "body",
+            data: {
+                name: "Duilio"
+            }
+        });
+    </script>
+    
+</body>
+</html>
