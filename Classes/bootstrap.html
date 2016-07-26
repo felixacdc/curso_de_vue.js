@@ -3,20 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <title>Styde.net | Curso de VueJS</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
 
     <script src="js/vue.js"></script>
 </head>
 <body>
-    <h1 id="title">Bienvenido, {{ name }}!</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <!-- v-if elimina el elemento si no se cumple la condicion -->
+                <!-- <h1 id="title" v-if="name">Bienvenido, {{ name }}!</h1> -->
+                <!-- v-show oculta el elemento si no se cumple la condicion -->
+                <h1 id="title" v-show="name">Bienvenido, {{ name }}!</h1>
+        
+                <!-- v-model es una propiedad de vue.js -->
+                <input type="text" v-model="name" class="form-control">
+                
+                <hr>
+                
+                <!-- Permite mostrar objetos en jormato json -->
+                <pre>{{ $data | json }}</pre>                
+            </div>
+        </div>
+    </div>
     
-    <!-- v-model es una propiedad de vue.js -->
-    <input type="text" v-model="name" class="form-control">
-    
-    <hr>
-    
-    <!-- Permite mostrar objetos en jormato json -->
-    <pre>{{ $data | json }}</pre>
 
     <script>
         /*
