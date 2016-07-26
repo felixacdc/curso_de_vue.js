@@ -14,10 +14,31 @@
                 <!-- v-if elimina el elemento si no se cumple la condicion -->
                 <!-- <h1 id="title" v-if="name">Bienvenido, {{ name }}!</h1> -->
                 <!-- v-show oculta el elemento si no se cumple la condicion -->
-                <h1 id="title" v-show="name">Bienvenido, {{ name }}!</h1>
-        
+                <!-- <h1 id="title" v-show="name">Bienvenido, {{ name }}!</h1> -->
+                <!-- cuando queremos ocultar o mostrar un conjunto de elemntos es recomendable agruparlos en un div -->
+                <!-- <div v-show="name">
+                    <h1>Bienvenido, {{ name }}!</h1>
+                    <p>Espero que disfrutes tu vista</p>
+                </div> -->
+                <!-- con template podemos agrupar elementos (v-show no funciona con template) -->
+                <template v-if='name'>
+                    <!-- operador condicional ternary -->
+                    <h1>
+                        {{ gender == 'm' ? 'Bienvenido' : 'Bienvenida' }}, {{ name }}!
+                    </h1>
+                    <p>Espero que disfrutes tu vista</p>
+                    <p>Tu nombre al revez es: {{ name.split('').reverse().join('') }}</p>
+                </template>
+                <p v-else>Por favor escribe tu nombre.</p>
+
                 <!-- v-model es una propiedad de vue.js -->
                 <input type="text" v-model="name" class="form-control">
+                <p v-if='!name' class='alert alert-danger'>
+                    Este campo es obligatorio
+                </p>
+                <p v-if='name.length < 2' class='alert alert-danger'>
+                    El nombre no es valido
+                </p>
                 
                 <hr>
                 
@@ -45,7 +66,8 @@
             // Define a que objeto o elemento de la pagina queremos asociar nuestro elemento de vue.js
             el: "body",
             data: {
-                name: "Duilio"
+                name: "",
+                gender: "m"
             }
         });
     </script>
