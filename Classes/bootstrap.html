@@ -47,13 +47,15 @@
                         <option value="m">Masculino</option>
                         <option value="f">Femenino</option>
                     </select>
+                    
+                    <br>
 
-                    <p>¿Cuántos años de experiencia tienes con PHP?</p>
+                    <label>¿Cuántos años de experiencia tienes con PHP?</label>
 
                     <p>
                         Respuesta: <strong>{{ years_php }}</strong>
                         <button type="button" class="btn" @click="years_php ++">+</button>
-                        <button type="button" class="btn" @click="years_php --">-</button>
+                        <button type="button" class="btn" @click="less">-</button>
                     </p>
                     
                     <div v-show="name">
@@ -104,6 +106,12 @@
 
                     if (logout) {
                         alert('Saliendo del sistema.');
+                    }
+                },
+                less: function() {
+
+                    if (this.years_php > 0) {
+                        this.years_php--;
                     }
                 }
             }
