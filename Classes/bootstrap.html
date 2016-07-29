@@ -55,8 +55,11 @@
                     <p>
                         Respuesta: <strong>{{ years_php }}</strong>
                         <button type="button" class="btn" @click="years_php ++">+</button>
-                        <button type="button" class="btn" @click="less">-</button>
+                        <!-- el abrebiado de la funcion v-bind es : -->
+                        <button type="button" :disabled="years_php == 0" class="btn" @click="less">-</button>
                     </p>
+
+                    <img src="logo.png" v-bind:title="years_php">
                     
                     <div v-show="name">
                         <hr>
