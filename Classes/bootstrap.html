@@ -62,6 +62,18 @@
                         <button type="button" :disabled="years_php == 0" class="btn" @click="less">-</button>
                     </p>
 
+                    <label>¿Cuántos años de experiencia tienes con JavaScript?</label>
+
+                    <p>
+                        Respuesta: <strong>{{ years_js }}</strong>
+                        <button type="button" 
+                                :class="{ btn: true, 'btn-danger': years_js > 10 }"
+                                :style="getAddYearJsButtonStyles()"
+                                @click="years_js ++">+</button>
+                        <!-- el abrebiado de la funcion v-bind es : -->
+                        <button type="button" :disabled="years_js == 0" class="btn" @click="lessJs">-</button>
+                    </p>
+
                     <img src="logo.png" v-bind:title="years_php">
                     
                     <div v-show="name">
@@ -103,7 +115,8 @@
             data: {
                 name: "",
                 gender: "m",
-                years_php: 0
+                years_php: 0,
+                years_js: 0
             },
             methods: {
                 signUp: function(logout, event) {
@@ -122,7 +135,15 @@
                 },
                 getAddYearButtonStyles: function() {
                     return {'font-size': 10 + this.years_php + 'px'};
-                }
+                },
+                lessJs: function() {
+                    if (this.years_js > 0) {
+                        this.years_js--;
+                    }
+                },
+                getAddYearJsButtonStyles: function() {
+                    return {'font-size': 10 + this.years_js + 'px'};
+                },
             }
         });
     </script>
