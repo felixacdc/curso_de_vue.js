@@ -54,7 +54,10 @@
 
                     <p>
                         Respuesta: <strong>{{ years_php }}</strong>
-                        <button type="button" class="btn" @click="years_php ++">+</button>
+                        <button type="button" 
+                                :class="{ btn: true, 'btn-danger': years_php > 10 }"
+                                :style="getAddYearButtonStyles()"
+                                @click="years_php ++">+</button>
                         <!-- el abrebiado de la funcion v-bind es : -->
                         <button type="button" :disabled="years_php == 0" class="btn" @click="less">-</button>
                     </p>
@@ -116,6 +119,9 @@
                     if (this.years_php > 0) {
                         this.years_php--;
                     }
+                },
+                getAddYearButtonStyles: function() {
+                    return {'font-size': 10 + this.years_php + 'px'};
                 }
             }
         });
