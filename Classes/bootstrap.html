@@ -22,10 +22,7 @@
                 </div> -->
                 <!-- con template podemos agrupar elementos (v-show no funciona con template) -->
                 <template v-if='name'>
-                    <!-- operador condicional ternary -->
-                    <h1>
-                        {{ gender == 'm' ? 'Bienvenido' : 'Bienvenida' }}, {{ name }}!
-                    </h1>
+                    <welcome-message :name="name" :gender="gender"></welcome-message>
                     <p>Espero que disfrutes tu vista</p>
                     <p>Tu nombre al revez es: {{ name.split('').reverse().join('') }}</p>
                 </template>
@@ -48,31 +45,8 @@
                         <option value="f">Femenino</option>
                     </select>
                     
-                    <br>
-
-                    <label>¿Cuántos años de experiencia tienes con PHP?</label>
-
-                    <p>
-                        Respuesta: <strong>{{ years_php }}</strong>
-                        <button type="button" 
-                                :class="{ btn: true, 'btn-danger': years_php > 10 }"
-                                :style="getAddYearButtonStyles()"
-                                @click="years_php ++">+</button>
-                        <!-- el abrebiado de la funcion v-bind es : -->
-                        <button type="button" :disabled="years_php == 0" class="btn" @click="less">-</button>
-                    </p>
-
-                    <label>¿Cuántos años de experiencia tienes con JavaScript?</label>
-
-                    <p>
-                        Respuesta: <strong>{{ years_js }}</strong>
-                        <button type="button" 
-                                :class="{ btn: true, 'btn-danger': years_js > 10 }"
-                                :style="getAddYearJsButtonStyles()"
-                                @click="years_js ++">+</button>
-                        <!-- el abrebiado de la funcion v-bind es : -->
-                        <button type="button" :disabled="years_js == 0" class="btn" @click="lessJs">-</button>
-                    </p>
+                    <years-exp :years.sync='years_php' tech="PHP"></years-exp>
+                    <years-exp :years.sync='years_js' tech="JavaScript"></years-exp>
 
                     <img src="logo.png" v-bind:title="years_php">
                     
@@ -90,13 +64,75 @@
                 <hr>
                 
                 <!-- Permite mostrar objetos en jormato json -->
-                <pre>{{ $data | json }}</pre>                
+                <pre>{{ $data | json }}</pre>    
+
+                <hello-world></hello-world>            
             </div>
         </div>
     </div>
     
+    <script type="text/template" id="welcome_template">
+        <!-- operador condicional ternary -->
+        <h1>
+            {{ gender == 'm' ? 'Bienvenido' : 'Bienvenida' }}, {{ name }}!
+        </h1>
+    </script>
+
+    <script type="text/template" id="years_template">
+        <br>
+
+        <label>¿Cuántos años de experiencia tienes con {{ tech }}?</label>
+
+        <p>
+            Respuesta: <strong>{{ years }}</strong>
+            <button type="button" 
+                    :class="{ btn: true, 'btn-danger': years > 10 }"
+                    :style="getAddYearButtonStyles()"
+                    @click="add">+</button>
+            <!-- el abrebiado de la funcion v-bind es : -->
+            <button type="button" :disabled="years == 0" class="btn" @click="less">-</button>
+        </p>
+    </script>
 
     <script>
+
+        Vue.component('hello-world', {
+            template: '<h2>Hello World</h2>'
+        });
+
+        Vue.component('welcome-message', {
+            template: '#welcome_template',
+            props: {
+                gender: {
+                    type: Array,
+                    required: false,
+                    default: 'm'
+                },
+                name:{
+                    type: String,
+                    required: true
+                }
+            }
+        });
+
+        Vue.component('years-exp', {
+            template: '#years_template',
+            methods: {
+                add: function() {
+                    return this.years ++
+                },
+                less: function() {
+
+                    if (this.years > 0) {
+                        this.years--;
+                    }
+                },
+                getAddYearButtonStyles: function() {
+                    return {'font-size': 10 + this.years + 'px'};
+                }
+            },
+            props: ['years', 'tech']
+        });
         /*
         Manera de crear una bienvenida interactiva utilizando JQuery
             $(document).ready(function() {
@@ -126,24 +162,7 @@
                     if (logout) {
                         alert('Saliendo del sistema.');
                     }
-                },
-                less: function() {
-
-                    if (this.years_php > 0) {
-                        this.years_php--;
-                    }
-                },
-                getAddYearButtonStyles: function() {
-                    return {'font-size': 10 + this.years_php + 'px'};
-                },
-                lessJs: function() {
-                    if (this.years_js > 0) {
-                        this.years_js--;
-                    }
-                },
-                getAddYearJsButtonStyles: function() {
-                    return {'font-size': 10 + this.years_js + 'px'};
-                },
+                }
             }
         });
     </script>
