@@ -28,7 +28,7 @@
                 </template>
                 <p v-else>Por favor escribe tu nombre.</p>
                 
-                <form action="">
+                <!-- <form action=""> -->
                     <!-- v-model es una propiedad de vue.js -->
                     <input type="text" v-model="name" class="form-control">
                     <p v-if='!name' class='alert alert-danger'>
@@ -45,9 +45,21 @@
                         <option value="f">Femenino</option>
                     </select>
 
+                    <hr>
+                    <br><br>
+
                     <template v-for="tech in techs">
                         <years-exp :years.sync='tech.years' :tech="tech.name"></years-exp>
                     </template>
+
+                    <form @submit.prevent="createTech" class="form">
+                        <input type="text" class="form-control" v-model="new_tech.name" placeholder="Tecnologia">
+                        <input type="number" class="form-control" v-model="new_tech.years">
+                        <br>
+                        <button type="submit" class="btn btn-primary">Agregar tecnologia</button>
+                    </form>
+
+                    <br><hr>
                     
                     <img src="logo.png" v-bind:title="years_php">
                     
@@ -60,7 +72,7 @@
                             <button type="submit" class="btn btn-primary" @click.prevent="signUp(true, $event)">Regístrate y sal del sistema</button>
                         </p>
                     </div>
-                </form>
+                <!-- </form> -->
                 
                 <hr>
                 
@@ -165,7 +177,8 @@
                         name: 'HTML', 
                         years: 0
                     }
-                ]
+                ],
+                new_tech: {name: "", years: 0}
             },
             methods: {
                 signUp: function(logout, event) {
@@ -175,6 +188,11 @@
                     if (logout) {
                         alert('Saliendo del sistema.');
                     }
+                },
+                createTech: function() {
+                    this.techs.push(this.new_tech);
+
+                    this.new_tech = {name: '', years: 0};
                 }
             }
         });

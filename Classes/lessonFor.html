@@ -17,7 +17,8 @@
     <hr>
 
     <form @submit.prevent="createNote" class="form">
-        <textarea cols="30" rows="4" v-model="new_note.text" class="form-control"></textarea>
+        <textarea cols="30" rows="4" v-model="new_note.text" class="form-control" placeholder="Nota"></textarea>
+        <input type="text" v-model="new_note.author" class="form-control" placeholder="Autor">
         <br>
         <button type="submit" class="btn btn-primary">Agregar nota</button>
     </form>
@@ -48,13 +49,13 @@
                         author: 'Duilio04'
                     }
                 ],
-                new_note: {text: '', author: 'Duilio'}
+                new_note: {text: '', author: ''}
             },
             methods: {
                 createNote: function() {
                     this.notes.push(this.new_note);
 
-                    this.new_note = {text: '', author: 'Duilio'};
+                    this.new_note = {text: '', author: ''};
                 }
             }
         });
