@@ -10,8 +10,54 @@
 <body>
     <h1>Hello, world!</h1>
 
+    <ul v-for="note in notes">
+        <li>{{ $index + 1 }}: Nota: {{ note.note }} - Autor: {{ note.author }}</li>
+    </ul>
+
+    <hr>
+
+    <form @submit.prevent="createNote" class="form">
+        <textarea cols="30" rows="4" v-model="new_note.text" class="form-control"></textarea>
+        <br>
+        <button type="submit" class="btn btn-primary">Agregar nota</button>
+    </form>
+
     <script>
-        
+        new Vue({
+            el: 'body',
+            data: {
+                notes: [
+                    {
+                        note: 'v-for es la directiva que utilizmos para iterar una lista',
+                        author: 'Duilio'
+                    },
+                    {
+                        note: '@click se utiliza como un alias de v-on:click',
+                        author: 'Duilio01'
+                    },
+                    {
+                        note: 'Con Vue puedes crear tus propios componentes',
+                        author: 'Duilio02'
+                    },
+                    {
+                        note: 'El curso de Vue.js en styde es genial',  
+                        author: 'Duilio03'
+                    },
+                    {
+                        note: 'Regístrate hoy en Styde.net',
+                        author: 'Duilio04'
+                    }
+                ],
+                new_note: {text: '', author: 'Duilio'}
+            },
+            methods: {
+                createNote: function() {
+                    this.notes.push(this.new_note);
+
+                    this.new_note = {text: '', author: 'Duilio'};
+                }
+            }
+        });
     </script>
 </body>
 </html>

@@ -44,10 +44,11 @@
                         <option value="m">Masculino</option>
                         <option value="f">Femenino</option>
                     </select>
-                    
-                    <years-exp :years.sync='years_php' tech="PHP"></years-exp>
-                    <years-exp :years.sync='years_js' tech="JavaScript"></years-exp>
 
+                    <template v-for="tech in techs">
+                        <years-exp :years.sync='tech.years' :tech="tech.name"></years-exp>
+                    </template>
+                    
                     <img src="logo.png" v-bind:title="years_php">
                     
                     <div v-show="name">
@@ -151,8 +152,20 @@
             data: {
                 name: "",
                 gender: "m",
-                years_php: 0,
-                years_js: 0
+                techs: [
+                    {
+                        name: 'PHP', 
+                        years: 0
+                    },
+                    {
+                        name: 'JS', 
+                        years: 0
+                    },
+                    {
+                        name: 'HTML', 
+                        years: 0
+                    }
+                ]
             },
             methods: {
                 signUp: function(logout, event) {
