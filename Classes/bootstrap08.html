@@ -13,14 +13,19 @@
             <div class="col-md-6 col-md-offset-3">
                 <template v-if='name'>
                     <h1>
-                        {{ welcome_messages }}, {{ name }}!
+                        {{ welcome_messages }}, {{ name }}
                     </h1>
                     <p>Espero que disfrutes tu vista</p>
                     <p>Tu nombre al revez es: {{ name.split('').reverse().join('') }}</p>
                 </template>
                 <p v-else>Por favor escribe tu nombre.</p>
+                
+                <label>Primer nombre:</label>
+                <input type="text" v-model="first_name" class="form-control">
+                <label>Apellido:</label>
+                <input type="text" v-model="last_name" class="form-control">
+                <br>
 
-                <input type="text" v-model="name" class="form-control">
                 <p v-if='!name' class='alert alert-danger'>
                     Este campo es obligatorio
                 </p>
@@ -116,7 +121,8 @@
         new Vue({
             el: "body",
             data: {
-                name: "",
+                first_name: "",
+                last_name: "",
                 gender: "m",
                 spanish: true,
                 techs: [
@@ -144,6 +150,18 @@
                         return 'Welcome';
                     }                    
                         
+                },
+                name: function() {
+                    if ( this.first_name || this.last_name) {
+                        return this.first_name + ' ' + this.last_name;
+                    }
+
+                    return '';
+                }
+            },
+            watch: {
+                first_name: function(first_name) {
+                    console.log(first_name);
                 }
             },
             methods: {
