@@ -16,7 +16,7 @@
                         {{ welcome_messages }}, {{ name }}
                     </h1>
                     <p>Espero que disfrutes tu vista</p>
-                    <p>Tu nombre al revez es: {{ name.split('').reverse().join('') }}</p>
+                    <p>Tu nombre al revez es: {{ upside_down }}</p>
                 </template>
                 <p v-else>Por favor escribe tu nombre.</p>
                 
@@ -90,6 +90,7 @@
                     :style="getAddYearButtonStyles()"
                     @click="add">+</button>
             <button type="button" :disabled="years == 0" class="btn" @click="less">-</button>
+            <span>{{ experience }}</span>
         </p>
     </script>
 
@@ -101,6 +102,17 @@
 
         Vue.component('years-exp', {
             template: '#years_template',
+            computed: {
+                experience: function() {
+                    if (this.years > 5) {
+                        return 'Experto';
+                    } else if (this.years > 2) {
+                        return 'Intermedio';
+                    } else {
+                        return 'Principiante';
+                    }
+                }
+            },
             methods: {
                 add: function() {
                     return this.years ++
@@ -157,6 +169,9 @@
                     }
 
                     return '';
+                },
+                upside_down: function() {
+                    return this.name.split('').reverse().join('')
                 }
             },
             watch: {
