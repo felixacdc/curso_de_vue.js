@@ -17,7 +17,7 @@
                         {{ welcome_messages }}, {{ name | ucwords }}
                     </h1>
                     <p>Espero que disfrutes tu vista</p>
-                    <p>Tu nombre al revez es: {{ upside_down }}</p>
+                    <p>Tu nombre al revez es: {{ name | reves }}</p>
                 </template>
                 <p v-else>Por favor escribe tu nombre.</p>
                 
@@ -58,9 +58,25 @@
                 </form>
 
                 <br>
-                
+
+                <h3>Tienes experiencia con backend en:</h3>
                 <!-- si al filtro orderBy se le agrega un -1 al final los ordena de forma descendente -->
-                <ul v-for="tech in techs | orderBy 'years' -1 | years">
+                <ul v-for="tech in techs | orderBy 'years' -1 | years | veryTypeBE">
+                    <li>{{ tech.name }}</li>
+                </ul>
+
+                <h3>Tienes experiencia con frontend en:</h3>
+                <ul v-for="tech in techs | orderBy 'years' -1 | years | veryTypeFE">
+                    <li>{{ tech.name }}</li>
+                </ul>
+
+                <h3>Eres experto en:</h3>
+                <ul v-for="tech in techs | orderBy 'years' -1 | moreYears">
+                    <li>{{ tech.name }}</li>
+                </ul>
+
+                <h3>No tienes experiencia en:</h3>
+                <ul v-for="tech in techs | orderBy 'years' -1 | noYears">
                     <li>{{ tech.name }}</li>
                 </ul>
 
@@ -120,6 +136,34 @@
             });
         });
 
+        Vue.filter('reves', function(value) {
+            return value.split('').reverse().join('')
+        });
+
+        Vue.filter('veryTypeBE', function(techs) {
+            return techs.filter(function (tech) {
+                return tech.type == 'backend';
+            });
+        });
+
+        Vue.filter('veryTypeFE', function(techs) {
+            return techs.filter(function (tech) {
+                return tech.type == 'frontend';
+            });
+        });
+
+        Vue.filter('moreYears', function(techs) {
+            return techs.filter(function (tech) {
+                return tech.years > 5;
+            });
+        });
+
+        Vue.filter('noYears', function(techs) {
+            return techs.filter(function (tech) {
+                return tech.years == 0;
+            });
+        });
+
         Vue.component('years-exp', {
             template: '#years_template',
             computed: {
@@ -160,18 +204,21 @@
                 techs: [
                     {
                         name: 'PHP', 
-                        years: 0
+                        years: 0,
+                        type: 'backend'
                     },
                     {
                         name: 'JS', 
-                        years: 0
+                        years: 0,
+                        type: 'frontend'
                     },
                     {
                         name: 'HTML', 
-                        years: 0
+                        years: 0,
+                        type: 'frontend'
                     }
                 ],
-                new_tech: {name: "", years: 0}
+                new_tech: {name: "", years: 0, type: "backend"}
             },
             computed: {
                 welcome_messages: function() {
