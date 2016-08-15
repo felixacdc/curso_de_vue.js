@@ -13,7 +13,8 @@
             <div class="col-md-6 col-md-offset-3">
                 <template v-if='name'>
                     <h1>
-                        {{ welcome_messages }}, {{ name }}
+                        <!-- {{ welcome_messages }}, {{ name | uppercase }} -->
+                        {{ welcome_messages }}, {{ name | ucwords }}
                     </h1>
                     <p>Espero que disfrutes tu vista</p>
                     <p>Tu nombre al revez es: {{ upside_down }}</p>
@@ -56,7 +57,14 @@
                     <button type="submit" class="btn btn-primary">Agregar tecnologia</button>
                 </form>
 
-                <br><hr>
+                <br>
+                
+                <!-- si al filtro orderBy se le agrega un -1 al final los ordena de forma descendente -->
+                <ul v-for="tech in techs | orderBy 'years' -1 | years">
+                    <li>{{ tech.name }}</li>
+                </ul>
+
+                <hr>
                 
                 <img src="logo.png" v-bind:title="years_php">
                 
@@ -98,6 +106,18 @@
 
         Vue.component('hello-world', {
             template: '<h2>Hello World</h2>'
+        });
+
+        Vue.filter('ucwords', function (value) {
+            return value.split(' ').map(function (word) {
+                return word.charAt(0).toUpperCase() + word.slice(1);
+            }).join(' ');
+        });
+
+        Vue.filter('years', function(techs) {
+            return techs.filter(function (tech) {
+                return tech.years > 0;
+            });
         });
 
         Vue.component('years-exp', {
