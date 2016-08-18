@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Styde.net | Curso de VueJS</title>
+    <link rel="stylesheet" href="../css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="../css/font-awesome.min.css">
+</head>
+<body>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <h1>Styde.net / Curso de VueJS / Lección 9</h1>  
+            
+            <table class="table table-striped table-hover">
+                <tr>
+                    <th>Categoría</th>
+                    <th>Nota</th>
+                    <th width="50px">&nbsp;</th>
+                </tr>
+                <tr v-for="note in notes">
+                    <td>{{ note.category_id | category }}</td>
+                    <td>{{ note.note }}</td>
+                    <td>
+                        <a href="">
+                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                        </a>
+                        <a href="">
+                            <i class="fa fa-search" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <script src="../js/vue.js"></script>
+    <script src="../js/main.js"></script>
+
+</body>
+</html>
