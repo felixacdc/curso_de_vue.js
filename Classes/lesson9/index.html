@@ -17,32 +17,19 @@
                     <th>Nota</th>
                     <th width="50px">&nbsp;</th>
                 </tr>
-                <tr v-for="note in notes">
-                    <template v-if="!note.editing">
-                        <td>{{ note.category_id | category }}</td>
-                        <td>{{ note.note }}</td>
-                        <td>
-                            <a href="#" @click="editNote(note)">
-                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                            </a>
-                            <a href="#" @click='deleteNote(note)'>
-                                <i class="fa fa-trash-o" aria-hidden="true"></i>
-                            </a>
-                        </td>
-                    </template>
-                    <template v-else>
-                        <td>
-                            <select-category :categories="categories" :id.sync="note.category_id">
-                        </td>
-                        <td>
-                            <input type="text" v-model="note.note" class="form-control">
-                        </td>
-                        <td>
-                            <a href="#" @click="updateNote(note)">
-                                <i class="fa fa-floppy-o" aria-hidden="true"></i>
-                            </a>
-                        </td>
-                    </template>
+                <tr v-for="note in notes" is="note-row" :note.sync="note" :categories="categories"></tr>
+                <tr>
+                    <td>
+                        <select-category :categories="categories" :id.sync="new_note.category_id"></select-category>
+                    </td>
+                    <td>
+                        <input type="text" v-model="new_note.note" class="form-control">
+                    </td>
+                    <td>
+                        <a href="#" @click="createNote()">
+                            <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                        </a>
+                    </td>
                 </tr>
             </table>
         </div>
@@ -56,6 +43,36 @@
                 {{ category.name }}
             </option>
         </select>
+    </template>
+
+    <template id="note_row_tpl">
+        <tr>
+            <template v-if="!editing">
+                <td>{{ note.category_id | category }}</td>
+                <td>{{ note.note }}</td>
+                <td>
+                    <a href="#" @click="edit()">
+                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                    </a>
+                    <a href="#" @click='remove()'>
+                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                    </a>
+                </td>
+            </template>
+            <template v-else>
+                <td>
+                    <select-category :categories="categories" :id.sync="note.category_id">
+                </td>
+                <td>
+                    <input type="text" v-model="note.note" class="form-control">
+                </td>
+                <td>
+                    <a href="#" @click="update()">
+                        <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                    </a>
+                </td>
+            </template>
+        </tr>
     </template>
 
     <script src="../js/vue.js"></script>
