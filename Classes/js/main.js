@@ -48,6 +48,17 @@ var vm = new Vue({
             }
         ]
     },
+    methods: {
+        deleteNote: function(note) {
+            this.notes.$remove(note);
+        },
+        editNote: function(note) {
+            Vue.set(note, 'editing', true);
+        },
+        updateNote: function(note) {
+            note.editing = false;
+        }
+    },
     filters: {
         category: function(id) {
             var category = findById(this.categories, id);

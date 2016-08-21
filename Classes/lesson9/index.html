@@ -18,16 +18,31 @@
                     <th width="50px">&nbsp;</th>
                 </tr>
                 <tr v-for="note in notes">
-                    <td>{{ note.category_id | category }}</td>
-                    <td>{{ note.note }}</td>
-                    <td>
-                        <a href="">
-                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                        </a>
-                        <a href="">
-                            <i class="fa fa-search" aria-hidden="true"></i>
-                        </a>
-                    </td>
+                    <template v-if="!note.editing">
+                        <td>{{ note.category_id | category }}</td>
+                        <td>{{ note.note }}</td>
+                        <td>
+                            <a href="#" @click="editNote(note)">
+                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                            </a>
+                            <a href="#" @click='deleteNote(note)'>
+                                <i class="fa fa-trash-o" aria-hidden="true"></i>
+                            </a>
+                        </td>
+                    </template>
+                    <template v-else>
+                        <td>
+                            <input type="text" v-model="note.category_id" class="form-control">
+                        </td>
+                        <td>
+                            <input type="text" v-model="note.note" class="form-control">
+                        </td>
+                        <td>
+                            <a href="#" @click="updateNote(note)">
+                                <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                            </a>
+                        </td>
+                    </template>
                 </tr>
             </table>
         </div>
